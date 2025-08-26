@@ -38,13 +38,28 @@ const tudoEmMaiusculo = frutas.map(fruta=> fruta.toUpperCase())
 console.log(frutas);
 console.log(tudoEmMaiusculo);
 
+//ex20
 const numeros = [10, 3, 25, 8, 15, 2];
 const maiorQueDez = numeros.filter(numero=> numero > 10);
 console.log(numeros)
 console.log(`Números maiores que 10: ${maiorQueDez}`);
-*/
+
+
+//ex21
 const nomes = ["Ana", "Pedro", "João", "Carolina", "Lu"];
 const maiorQuatro = nomes.filter(nome => nome.length > 4);
 console.log(nomes);
 console.log("------------------------------------------");
 console.log(`Nomes maiores que 4 letras: ${maiorQuatro}`);
+
+// ex22
+const valores = [5, 10, 15, 20];
+const somaTotal = valores.reduce((acc, total)=> acc+total, 0);
+console.log(`A soma total foi: R$ ${somaTotal.toFixed(2)}`);
+
+*/
+
+const palavras = ["JS", "é", "muito", "legal"]
+const unicaString = palavras.reduce((acc, texto)=> acc+texto + " ", "");
+
+console.log(unicaString)
