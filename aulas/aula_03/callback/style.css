@@ -1,0 +1,26 @@
+  body{
+            background-image: linear-gradient(to right, #ff7e5f, #feb47b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        h1{
+            color: #FFFF;
+        }
+        #btn{
+            margin: auto;
+            padding: 10px;
+            width: 10%;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #3bbb94;
+            cursor: pointer;
+            color: #fff;
+            border: none;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        #btn:hover{
+            transform: scale(1.1);
+        }
