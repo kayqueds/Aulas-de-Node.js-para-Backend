@@ -1,1 +1,2 @@
-/aulas/aula_03node_modules
+*node_modules
+*.env
