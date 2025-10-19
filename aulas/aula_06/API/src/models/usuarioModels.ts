@@ -1,6 +1,9 @@
 // importando  a conexão com o banco de dados e as Interfaces
 import { connectionModel } from "./connectionModels";
 import type { User } from "../interfaces/types";
+import {hash} from 'bcrypt'
+import { randomInt } from 'crypto'
+
 
 const getUserAll =  async () =>{
     const [listUsers] = await connectionModel.execute('SELECT * FROM user')
@@ -14,8 +17,11 @@ const getUserById =  async (id:number) =>{
 
 const createNewUser=  async (body: User) =>{
     const {name,email,password,role} = body
+    // vou gerar um número aleatório de 1 a 16
+    const randomSalt = randomInt(1, 16);
+    const hashedPassword = await hash(password, randomSalt);
     const query = 'INSERT INTO user(name,email,password,role) values(?,?,?,?)'
-    const [newUser] =  await connectionModel.execute(query,[name,email,password,role])
+    const [newUser] =  await connectionModel.execute(query,[name,email,hashedPassword,role])
     return newUser
 }
 const editUser =  async (id:number, body:User) =>{
