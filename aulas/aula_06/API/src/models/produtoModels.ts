@@ -1,6 +1,5 @@
 import { connectionModel } from "./connectionModels";
 import type { Product } from "../interfaces/types";
-import { get } from "http";
 
 const getProductAll =  async () =>{
     const [listProducts] = await connectionModel.execute('SELECT * FROM product')
