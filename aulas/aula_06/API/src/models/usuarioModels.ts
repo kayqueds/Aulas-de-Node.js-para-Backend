@@ -1,29 +1,29 @@
 // importando  a conexão com o banco de dados e as Interfaces
 import { connectionModel } from "./connectionModels";
 import type { User } from "../interfaces/types";
-import {hash} from 'bcrypt'
-import { randomInt } from 'crypto'
+import {hash, compare} from 'bcrypt'
 
-
+// pegar todos
 const getUserAll =  async () =>{
     const [listUsers] = await connectionModel.execute('SELECT * FROM user')
         return listUsers
 }
-
+// pegar pelo id
 const getUserById =  async (id:number) =>{
     const [user] = await connectionModel.execute(`SELECT * FROM user where id=${id}`)
     return user
 }
-
+// criar novo usuário
 const createNewUser=  async (body: User) =>{
     const {name,email,password,role} = body
-    // vou gerar um número aleatório de 1 a 16
-    const randomSalt = randomInt(1, 16);
-    const hashedPassword = await hash(password, randomSalt);
+    // vou gerar um número aleatório de salt para hashear a senha
+    const round = 10
+    const hashedPassword = await hash(password, round);
     const query = 'INSERT INTO user(name,email,password,role) values(?,?,?,?)'
     const [newUser] =  await connectionModel.execute(query,[name,email,hashedPassword,role])
     return newUser
 }
+// função para editar o usuário
 const editUser =  async (id:number, body:User) =>{
     const {name,email,password,role} = body
     const query = 'UPDATE user set name=?,email=?,password=?,role=? where id = ?'
@@ -43,10 +43,27 @@ const removeUser =  async (id:number) =>{
     return user
 }
 
+// autenticar usuário usando o compare
+const authenticateUser = async (email:string, password:string) => {
+    const [query]: any = await connectionModel.execute('SELECT * FROM user WHERE email = ?', [email]);
+    if (query.length === 0) {
+        throw new Error('Usuário não encontrado');
+    }
+    const user = query[0];
+    const isPasswordValid = await compare(password, user.password);
+    if (!isPasswordValid) {
+        throw new Error('Senha inválida');
+    }
+    return user;
+}
+
+// aqui eu exporto as funções para os outros arquivos
+
 export default {
     getUserAll,
     getUserById,
     createNewUser,
+    authenticateUser,
     editUser,
     editUserPartial,
     removeUser

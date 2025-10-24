@@ -19,3 +19,5 @@ router.post('/usuario', userController.createNewUser)
 router.patch('/usuario/:id', userController.editUserPartial)
 router.put('/usuario/:id', userController.editUser)
 router.delete('/usuario/:id', userController.removeUser)
+// rota de login
+router.post('/usuario/login', userController.loginUser)
